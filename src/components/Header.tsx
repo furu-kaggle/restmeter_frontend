@@ -1,5 +1,5 @@
 import React from 'react';
-import logoImage from '../assets/images/7.png';
+import logoImage from '../assets/images/7.webp';
 
 interface HeaderProps {
   onStartSurvey: () => void;

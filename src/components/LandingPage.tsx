@@ -10,11 +10,11 @@ import {
   Target,
   HelpCircle
 } from 'lucide-react';
-import heroBackdrop from '../assets/images/4.png';
-import heroPhoto from '../assets/images/2.png';
-import wordmarkImage from '../assets/images/3.png';
-import emblemImage from '../assets/images/1.png';
-import leafAccent from '../assets/images/6.png';
+import heroBackdrop from '../assets/images/4.webp';
+import heroPhoto from '../assets/images/2.webp';
+import wordmarkImage from '../assets/images/3.webp';
+import emblemImage from '../assets/images/1.webp';
+import leafAccent from '../assets/images/6.webp';
 
 interface LandingPageProps {
   onStartSurvey: () => void;
