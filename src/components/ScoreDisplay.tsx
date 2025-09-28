@@ -7,6 +7,7 @@ interface ScoreDisplayProps {
   icon: React.ReactNode;
   color: string;
   label: string;
+  description?: string;
   subtitle?: string;
 }
 
@@ -17,6 +18,7 @@ export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
   icon,
   color,
   label,
+  description,
   subtitle
 }) => {
   const percentage = (score / maxScore) * 100;
@@ -73,6 +75,11 @@ export const ScoreDisplay: React.FC<ScoreDisplayProps> = ({
         <div className={`text-lg font-semibold ${color} mb-2`}>
           {label}
         </div>
+        {description && (
+          <div className="text-sm text-gray-600 mb-1">
+            {description}
+          </div>
+        )}
         {subtitle && (
           <div className="text-sm text-gray-600">
             {subtitle}

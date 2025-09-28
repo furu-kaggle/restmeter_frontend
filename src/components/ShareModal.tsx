@@ -10,16 +10,24 @@ interface ShareModalProps {
 export const ShareModal: React.FC<ShareModalProps> = ({ scores, onClose }) => {
   const [copied, setCopied] = useState(false);
   
-  const websiteUrl = 'https://restmeter.netlify.app/';
-  const shareText = `私の休養スコアは ${scores.restScore}/100、疲労度 ${scores.fatigueScore}/100。
-生理${scores.kpi1} / 心理${scores.kpi2} / 社会${scores.kpi3}。
-ボトルネック：${scores.bottleneckKpi}
-${websiteUrl}
-#休養学 #休養チェック`;
+  const websiteUrl = 'http://restmeter.jp';
+  const shareLines = [
+    `総合休養スコア: ${scores.restScore}/100`,
+    `コンディション: ${scores.ratingStars}（${scores.ratingLabel}）`,
+    `メモ: ${scores.ratingDescription}`,
+    `疲労度: ${scores.fatigueScore}/100`,
+    `生理: ${scores.kpi1} / 心理: ${scores.kpi2} / 社会: ${scores.kpi3}`,
+    `ボトルネック: ${scores.bottleneckKpi}`,
+    '',
+    '▼診断はこちら',
+    websiteUrl,
+    '',
+    '#休養学 #休養チェック',
+  ];
+  const shareText = shareLines.join('\n');
 
   const twitterIntentParams = new URLSearchParams({
     text: shareText,
-    url: websiteUrl,
   });
   const twitterUrl = `https://twitter.com/intent/tweet?${twitterIntentParams.toString()}`;
 
@@ -46,10 +54,32 @@ ${websiteUrl}
           </button>
         </div>
 
-        <div className="bg-gray-50 rounded-xl p-4 mb-6">
-          <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
-            {shareText}
-          </p>
+        <div className="bg-gray-50 rounded-xl p-4 mb-6 space-y-1">
+          {shareLines.map((line, index) => {
+            if (line === websiteUrl) {
+              return (
+                <a
+                  key={index}
+                  href={websiteUrl}
+                  className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline break-all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {websiteUrl.replace(/^https?:\/\//, '')}
+                </a>
+              );
+            }
+
+            if (line === '') {
+              return <div key={index} className="h-2" aria-hidden="true" />;
+            }
+
+            return (
+              <p key={index} className="text-sm text-gray-700 leading-relaxed">
+                {line}
+              </p>
+            );
+          })}
         </div>
 
         <div className="flex gap-3">

@@ -16,7 +16,10 @@ export interface ScoreData {
   kpi3: number; // 社会・能動的資本
   bottleneckKpi: string;
   bottleneckScore: number;
-  label: string;
+  ratingLevel: number;
+  ratingLabel: string;
+  ratingStars: string;
+  ratingDescription: string;
 }
 
 export interface Question {

@@ -63,7 +63,8 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart }) => {
           maxScore={100}
           icon={getScoreIcon(scores.restScore)}
           color={getScoreColor(scores.restScore)}
-          label={scores.label}
+          label={`${scores.ratingStars} ${scores.ratingLabel}`}
+          description={scores.ratingDescription}
           subtitle={`疲労度: ${scores.fatigueScore}/100`}
         />
         

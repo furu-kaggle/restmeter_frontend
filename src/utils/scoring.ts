@@ -26,13 +26,50 @@ export const calculateScores = (data: SurveyData): ScoreData => {
     current.score < min.score ? current : min
   );
   
-  // 判定ラベル
-  const getLabel = (score: number): string => {
-    if (score >= 80) return 'とても良い（しっかり休めている）';
-    if (score >= 60) return 'まずまず（小さな改善余地）';
-    if (score >= 40) return '要注意（休養戦略のテコ入れ推奨）';
-    return '高疲労リスク（早めの調整を）';
+  // コンディションを定性評価（5段階）
+  const getRating = (score: number) => {
+    if (score >= 85) {
+      return {
+        level: 5,
+        stars: '★★★★★',
+        label: 'とても良い',
+        description: 'しっかり休めている状態',
+      } as const;
+    }
+    if (score >= 70) {
+      return {
+        level: 4,
+        stars: '★★★★☆',
+        label: '良好',
+        description: 'パフォーマンスを維持できる状態',
+      } as const;
+    }
+    if (score >= 55) {
+      return {
+        level: 3,
+        stars: '★★★☆☆',
+        label: '回復途上',
+        description: '休養リズムの調整でさらに整えたい',
+      } as const;
+    }
+    if (score >= 40) {
+      return {
+        level: 2,
+        stars: '★★☆☆☆',
+        label: '注意が必要',
+        description: '疲労サインに早めに向き合うタイミング',
+      } as const;
+    }
+
+    return {
+      level: 1,
+      stars: '★☆☆☆☆',
+      label: '高疲労リスク',
+      description: 'まずは休養戦略を見直そう',
+    } as const;
   };
+
+  const rating = getRating(restScore);
   
   return {
     restScore,
@@ -42,6 +79,9 @@ export const calculateScores = (data: SurveyData): ScoreData => {
     kpi3,
     bottleneckKpi: bottleneck.name,
     bottleneckScore: bottleneck.score,
-    label: getLabel(restScore)
+    ratingLevel: rating.level,
+    ratingLabel: rating.label,
+    ratingStars: rating.stars,
+    ratingDescription: rating.description,
   };
 };

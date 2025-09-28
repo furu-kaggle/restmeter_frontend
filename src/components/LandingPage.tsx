@@ -1,15 +1,15 @@
 import React from 'react';
-import { 
-  ArrowRight, 
-  CheckCircle, 
-  Heart, 
-  Brain, 
-  Users, 
+import {
+  ArrowRight,
+  CheckCircle,
+  Brain,
+  Users,
+  ClipboardList,
   Target,
-  TrendingUp,
   Clock,
-  Award,
-  Zap
+  Activity,
+  Sparkles,
+  Heart
 } from 'lucide-react';
 
 interface LandingPageProps {
@@ -17,30 +17,42 @@ interface LandingPageProps {
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
-  const problems = [
-    '週末に寝だめしても、月曜の朝はぐったり',
-    '仕事が終わっても、頭がオンのままで休まらない',
-    '甘いものや栄養ドリンクで元気を「前借り」している',
-    '集中力が続かず、イライラしやすくなった',
-    '軽い運動が良いと知っていても、やる気が起きない',
-    '理由はわからないけど、なんとなく不調が続いている'
+  const awarenessPoints = [
+    '「なんとなくダルい」を言い換えてみると、休養のヒントが見えてくる',
+    '疲れを言語化しておくと、自分の限界や休むタイミングを他者に伝えやすい',
+    '数値化・可視化は、セルフマネジメントの第一歩'
   ];
 
-  const benefits = [
+  const restShifts = [
     {
-      icon: Target,
-      title: 'あなたの休養状態を「スコア化」',
-      description: '曖昧な「疲れ」を総合休養スコアとして客観的に数値化。自分の現在地を正確に把握できます。'
+      icon: Sparkles,
+      label: '休む=寝るだけ？',
+      description: '睡眠だけでなく、趣味や創作で頭を切り替える「転換タイプ」の休養も回復を後押し'
     },
     {
-      icon: TrendingUp,
-      title: '休養の「ボトルネック」がわかる',
-      description: '「生理的」「心理的」「社会的」の3つの資本から、あなたの弱点を特定。どこから手をつけるべきかが明確になります。'
+      icon: Users,
+      label: '孤独な休養は限界',
+      description: '信頼できる人との会話や緩やかなつながりが「親交タイプ」の休養として心を整える'
     },
     {
-      icon: Zap,
-      title: 'あなたに合った「休み方」のヒントが見つかる',
-      description: '診断結果に基づき、明日から実践できる具体的なアクションをご提案。「守りの休養」から「攻めの休養」へシフトしましょう。'
+      icon: Activity,
+      label: '動くほど疲れる？',
+      description: '血流を促す軽い運動やストレッチは「運動タイプ」の休養。翌日のダルさを減らします'
+    }
+  ];
+
+  const athleteInsights = [
+    {
+      title: 'アスリートは疲れのログを付けている',
+      description: 'トレーニングだけでなく、睡眠時間や気分、疲労度を記録。あなたの仕事にも応用できます。'
+    },
+    {
+      title: '次のパフォーマンスは、前日の休養で決まる',
+      description: '試合前の栄養補給やメンタル調整のように、翌日の商談・プレゼンへの準備として休養を設計しましょう。'
+    },
+    {
+      title: 'コンディション管理はチーム戦',
+      description: 'アスリートは専門スタッフと管理。ビジネスパーソンも仲間や家族と疲れの共有を習慣化することで回復力が高まります。'
     }
   ];
 
@@ -50,17 +62,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
       <section className="text-center py-12">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-            寝ても、休んでも、<br />
+            あなたのその疲れ、<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-green-600">
-              なぜかダルいあなたへ。
+              言葉にできますか？
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 mb-4 font-medium">
-            たった1分でわかる、あなたの「休養スコア」
+            7つの質問で「疲れの現在地」を数値化し、言語化するための診断ツール
           </p>
           <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
-            日本人の8割が抱える「疲れ」の正体。その原因は「休み方のミスマッチ」かもしれません。<br />
-            科学的アプローチに基づいた7つの質問で、あなたの心と身体のコンディションを可視化します。
+            仕事終わりのモヤモヤ、休日のだるさ。その正体を見える化して、自分に合った休み方を見つけましょう。
+            休養学の観点から、身体・心・社会的アクションの3つの資本でコンディションをチェックします。
           </p>
           
           <button
@@ -72,65 +84,91 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
             <ArrowRight className="w-6 h-6 ml-3" />
           </button>
           
-          <div className="mt-8 flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600">
-            <div className="flex items-center">
-              <Award className="w-4 h-4 mr-2 text-blue-500" />
-              日本リカバリー協会提唱「休養学」準拠
-            </div>
-            <div className="flex items-center">
-              <Heart className="w-4 h-4 mr-2 text-red-500" />
-              日本疲労学会の知見を参考に開発
-            </div>
-            <div className="flex items-center">
-              <TrendingUp className="w-4 h-4 mr-2 text-green-500" />
-              アスリートのコンディショニング理論を応用
-            </div>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+            {awarenessPoints.map((point, index) => (
+              <div key={index} className="flex items-start bg-white bg-opacity-60 rounded-2xl p-4 shadow-sm">
+                <ClipboardList className="w-5 h-5 text-blue-500 mr-3 mt-1 flex-shrink-0" />
+                <p className="text-sm text-gray-700 leading-relaxed">{point}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Problem Section */}
+      {/* 言語化セクション */}
       <section className="bg-white rounded-3xl shadow-lg p-8 md:p-12">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            こんな「隠れ疲労」、心当たりありませんか？
+            疲れを言語化するところから、整えるチャンスが始まる
           </h2>
           <p className="text-lg text-gray-600">
-            一つでも当てはまったら要注意。その疲れ、放置するとパフォーマンス低下だけでなく、<br />
-            <span className="font-semibold text-red-600">心身の重大な不調につながるサイン</span>かもしれません。
+            最近の自分を言葉にすると、休養の優先順位が見えてきます。診断ではこの3つの視点でチェックします。
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
-          {problems.map((problem, index) => (
-            <div key={index} className="flex items-start p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-red-50 hover:border-red-200 transition-colors duration-200">
-              <CheckCircle className="w-5 h-5 text-red-400 mr-3 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-700 leading-relaxed">{problem}</span>
+          {[
+            '週末に寝ても、月曜日の朝は体が重い',
+            '仕事モードが頭から抜けず、休みの日も気持ちが落ち着かない',
+            '疲労を言葉で説明できず、いつも我慢してしまう',
+            '「休みたい」と伝えるよりも先に、頑張ることを選んでしまう'
+          ].map((statement, index) => (
+            <div
+              key={index}
+              className="flex items-start p-4 bg-gray-50 rounded-xl border border-gray-100 hover:bg-blue-50 hover:border-blue-200 transition-colors duration-200"
+            >
+              <CheckCircle className="w-5 h-5 text-blue-400 mr-3 mt-0.5 flex-shrink-0" />
+              <span className="text-gray-700 leading-relaxed">{statement}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Solution Section */}
+      {/* 新しい休養常識セクション */}
       <section className="text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          「なんとなく」の不調を卒業！
+          休む=寝るだけ、はもう終わり。
         </h2>
         <p className="text-xl text-gray-600 mb-12">
-          「休養チェック」で得られる3つのこと
+          休養学が示す「攻めの休養」で、あなたの回復をアップデート。
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {benefits.map((benefit, index) => (
+          {restShifts.map(({ icon: Icon, label, description }, index) => (
             <div key={index} className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl mb-6">
-                <benefit.icon className="w-8 h-8 text-white" />
+                <Icon className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">
-                {benefit.title}
+                {label}
               </h3>
               <p className="text-gray-600 leading-relaxed">
-                {benefit.description}
+                {description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* アスリート知見セクション */}
+      <section className="bg-white rounded-3xl shadow-lg p-8 md:p-12">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            アスリートのリカバリー術をあなたの日常に
+          </h2>
+          <p className="text-lg text-gray-600">
+            ハイパフォーマンスを支える休養メソッドを、ビジネスや家事にも取り入れられる形でご紹介。
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {athleteInsights.map((insight, index) => (
+            <div key={index} className="bg-gray-50 rounded-2xl border border-gray-100 p-6 text-left">
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                {insight.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {insight.description}
               </p>
             </div>
           ))}
@@ -140,21 +178,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
       {/* CTA Section */}
       <section className="bg-gradient-to-r from-blue-600 to-green-600 rounded-3xl shadow-2xl p-8 md:p-12 text-center text-white">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">
-          あなたの直近1週間の休養をチェック
+          直近1週間の休養をスコア化し、言葉にしよう
         </h2>
         <p className="text-xl mb-2 opacity-90">
-          7つの質問に5段階でお答えください
+          7つの質問に5段階で答えるだけ。約1分で結果が届きます。
         </p>
         <p className="text-lg mb-8 opacity-80">
-          所要時間：約1分
+          結果は5段階のコンディション評価とともに、明日からの改善ヒントをお届け。
         </p>
-        
+
         <button
           onClick={onStartSurvey}
           className="inline-flex items-center px-8 py-4 bg-white text-blue-600 text-xl font-bold rounded-2xl hover:bg-gray-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
         >
           <Target className="w-6 h-6 mr-3" />
-          診断を開始する
+          診断を始める
           <ArrowRight className="w-6 h-6 ml-3" />
         </button>
       </section>
