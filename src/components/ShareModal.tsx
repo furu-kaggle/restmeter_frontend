@@ -10,12 +10,18 @@ interface ShareModalProps {
 export const ShareModal: React.FC<ShareModalProps> = ({ scores, onClose }) => {
   const [copied, setCopied] = useState(false);
   
+  const websiteUrl = 'https://restmeter.netlify.app/';
   const shareText = `私の休養スコアは ${scores.restScore}/100、疲労度 ${scores.fatigueScore}/100。
 生理${scores.kpi1} / 心理${scores.kpi2} / 社会${scores.kpi3}。
 ボトルネック：${scores.bottleneckKpi}
+${websiteUrl}
 #休養学 #休養チェック`;
 
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+  const twitterIntentParams = new URLSearchParams({
+    text: shareText,
+    url: websiteUrl,
+  });
+  const twitterUrl = `https://twitter.com/intent/tweet?${twitterIntentParams.toString()}`;
 
   const copyToClipboard = async () => {
     try {
@@ -52,7 +58,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ scores, onClose }) => {
             className="flex-1 flex items-center justify-center px-4 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors"
           >
             <Twitter className="w-5 h-5 mr-2" />
-            Twitterでシェア
+            Xでシェア
           </button>
           
           <button
