@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RotateCcw, Share2, Home, Heart, Brain, Users, Loader2 } from 'lucide-react';
-import { SurveyData } from '../types';
+import { SurveyData, ScoreData } from '../types';
 import { ShareModal } from './ShareModal';
 import { ImprovementHints } from './ImprovementHints';
 
@@ -10,7 +10,7 @@ interface ResultsProps {
   onBackHome: () => void;
 }
 
-const calculateScores = async (payload: SurveyData) => {
+const calculateScores = async (payload: SurveyData): Promise<ScoreData> => {
   const response = await fetch('/.netlify/functions/calculate-scores', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -18,7 +18,16 @@ const calculateScores = async (payload: SurveyData) => {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to calculate scores');
+    let message = 'Failed to calculate scores';
+    try {
+      const errorBody = await response.json();
+      if (errorBody?.message) {
+        message = errorBody.message;
+      }
+    } catch (err) {
+      // ignore JSON parse errors
+    }
+    throw new Error(message);
   }
 
   return response.json();
@@ -26,7 +35,7 @@ const calculateScores = async (payload: SurveyData) => {
 
 export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome }) => {
   const [showShareModal, setShowShareModal] = useState(false);
-  const [scores, setScores] = useState<any | null>(null);
+  const [scores, setScores] = useState<ScoreData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   React.useEffect(() => {

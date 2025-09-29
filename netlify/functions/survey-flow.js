@@ -1,4 +1,4 @@
-const QUESTIONS = [
+export const QUESTIONS = [
   {
     id: 'q1',
     category: '生理的資本（身体の回復）',
@@ -103,7 +103,7 @@ const buildResponse = (sanitizedAnswers) => {
   };
 };
 
-exports.handler = async (event) => {
+export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,

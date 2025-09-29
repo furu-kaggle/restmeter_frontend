@@ -51,8 +51,11 @@ function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [surveyData]);
 
-  const navigate = (page: AppPage, options?: { resetSurvey?: boolean }) => {
-    if (page === 'result' && !surveyData) {
+  const navigate = (
+    page: AppPage,
+    options?: { resetSurvey?: boolean; allowWithoutSurveyData?: boolean }
+  ) => {
+    if (page === 'result' && !surveyData && !options?.allowWithoutSurveyData) {
       page = 'landing';
     }
     if (typeof window !== 'undefined') {
@@ -72,7 +75,7 @@ function App() {
 
   const handleSurveyComplete = (data: SurveyData) => {
     setSurveyData(data);
-    navigate('result');
+    navigate('result', { allowWithoutSurveyData: true });
   };
 
   const handleRetake = () => {
