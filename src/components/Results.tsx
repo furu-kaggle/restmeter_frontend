@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { RotateCcw, Share2, Home, Heart, Brain, Users, Loader2 } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { RotateCcw, Share2, Home, Heart, Brain, Users, Loader2, ImageDown } from 'lucide-react';
 import { SurveyData, ScoreData } from '../types';
 import { ShareModal } from './ShareModal';
 import { ImprovementHints } from './ImprovementHints';
+import { captureResultImage } from '../hooks/useResultImage';
 
 interface ResultsProps {
   data: SurveyData;
@@ -37,6 +38,7 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
   const [showShareModal, setShowShareModal] = useState(false);
   const [scores, setScores] = useState<ScoreData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     let isMounted = true;
@@ -175,6 +177,20 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
                 結果をシェア
               </button>
               <button
+                onClick={async () => {
+                  if (!cardRef.current) return;
+                  try {
+                    await captureResultImage(cardRef.current);
+                  } catch (err) {
+                    console.error('Failed to export result image', err);
+                  }
+                }}
+                className="inline-flex items-center gap-2 px-5 py-3 bg-white/15 text-white font-semibold rounded-2xl hover:bg-white/25 transition-colors duration-200"
+              >
+                <ImageDown className="w-5 h-5" />
+                画像を保存
+              </button>
+              <button
                 onClick={onRestart}
                 className="inline-flex items-center gap-2 px-5 py-3 bg-white/15 text-white font-semibold rounded-2xl hover:bg-white/25 transition-colors duration-200"
               >
@@ -192,7 +208,10 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
           </div>
 
           <div className="justify-self-end w-full max-w-sm">
-            <div className="bg-white text-slate-900 rounded-[32px] shadow-2xl border border-white/60 p-6 space-y-6">
+            <div
+              ref={cardRef}
+              className="bg-white text-slate-900 rounded-[32px] shadow-2xl border border-white/60 p-6 space-y-6"
+            >
               <div className="flex items-end justify-between">
                 <div>
                   <p className="text-xs font-semibold text-emerald-500 uppercase tracking-[0.3em]">総合休養スコア</p>
