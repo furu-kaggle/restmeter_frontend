@@ -20,6 +20,8 @@ export interface ScoreData {
   ratingLabel: string;
   ratingStars: string;
   ratingDescription: string;
+  summary: string;
+  nextAction: string;
 }
 
 export interface Question {

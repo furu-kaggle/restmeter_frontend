@@ -123,7 +123,7 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
   ];
 
   const shareSummary = `休養スコア ${scores.restScore}/100（${scores.ratingLabel}）。弱いのは${scores.bottleneckKpi}。`;
-  const nextAction = '寝る90分前は画面オフ + 5分雑談。';
+  const nextAction = scores.nextAction.endsWith('。') ? scores.nextAction : `${scores.nextAction}。`;
   const nextActionShare = nextAction.replace(/。$/, '');
 
   return (
@@ -140,8 +140,7 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
               </h1>
             </div>
             <p className="text-white/80 leading-relaxed">
-              {scores.ratingDescription} ボトルネックは<strong className="text-white"> {scores.bottleneckKpi}</strong>。
-              明日の一手として<strong className="text-white"> {nextAction}</strong> を提案します。
+              {scores.summary} 明日の一手として<strong className="text-white"> {nextAction}</strong> を提案します。
             </p>
 
             <div className="space-y-3 text-sm text-white/80">
@@ -226,9 +225,8 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
               <div className="space-y-3 text-sm text-slate-600 leading-relaxed">
                 <div>
                   <p className="font-semibold text-slate-900">要約（2行）</p>
-                  <p className="mt-1">
-                    直近の休養は「{scores.ratingLabel}」。生理は〇、<span className="font-semibold text-blue-600">心理</span>と
-                    <span className="font-semibold text-green-600">社会</span>が弱め。
+                  <p className="mt-1 text-sm leading-relaxed text-slate-700">
+                    {scores.summary}
                   </p>
                 </div>
                 <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4">

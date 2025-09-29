@@ -10,24 +10,64 @@ interface ShareModalProps {
 export const ShareModal: React.FC<ShareModalProps> = ({ scores, onClose }) => {
   const [copied, setCopied] = useState(false);
   
-  const websiteUrl = 'http://restmeter.jp';
+  const baseUrl = 'http://restmeter.jp';
+  const shareCtas = [
+    { text: '1分休養チェック', content: 'simple-01' },
+    { text: 'だるさ見える化', content: 'simple-04' },
+    { text: '厚労省ベース診断', content: 'authority-01' },
+    { text: '改善ヒント即届く', content: 'benefit-02' },
+    { text: '寝溜めループ脱出', content: 'pain-03' },
+    { text: '出社前60秒診断', content: 'fomo-04' },
+    { text: '昼の集中を守る', content: 'timeofday-03' },
+    { text: 'プロジェクト後半に', content: 'work_productivity-09' },
+    { text: 'ランの質を保つ', content: 'athlete_fitness-02' },
+    { text: '休養は設計で決まる', content: 'thread_openers-01' }
+  ];
+
+  const selectedCta = shareCtas[scores.restScore % shareCtas.length];
+  const trackingUrl = baseUrl;
+
+  const snippetBase = scores.summary.replace(/\s+/g, ' ').trim();
+  const hashtag = '#休養 #休養チェック';
+  const prefix = `${selectedCta.text}｜休養スコア${scores.restScore}/100（${scores.ratingLabel}）`;
+  const suffix = `${trackingUrl} ${hashtag}`;
+
+  const buildTweetText = () => {
+    const MAX_LENGTH = 130; // 140字の余裕を持たせる
+    let available = MAX_LENGTH - (prefix.length + suffix.length + 2);
+    let snippet = snippetBase;
+    if (available < 0) available = 0;
+    if (snippet.length > available) {
+      snippet = snippet.slice(0, Math.max(0, available));
+      snippet = snippet.replace(/[、。,.\s]+$/, '');
+      if (snippet.length > 0) {
+        snippet += '…';
+      }
+    }
+    const body = snippet.length > 0 ? `${prefix} ${snippet}` : prefix;
+    return `${body} ${suffix}`.trim();
+  };
+
+  const tweetText = buildTweetText();
+
   const shareLines = [
     `総合休養スコア: ${scores.restScore}/100`,
     `コンディション: ${scores.ratingStars}（${scores.ratingLabel}）`,
-    `メモ: ${scores.ratingDescription}`,
+    `メモ: ${scores.summary}`,
     `疲労度: ${scores.fatigueScore}/100`,
     `生理: ${scores.kpi1} / 心理: ${scores.kpi2} / 社会: ${scores.kpi3}`,
     `ボトルネック: ${scores.bottleneckKpi}`,
     '',
-    '▼診断はこちら',
-    websiteUrl,
+    `▼${selectedCta.text}`,
+    trackingUrl,
+    `明日の一手: ${scores.nextAction}`,
     '',
     '#休養学 #休養チェック',
   ];
   const shareText = shareLines.join('\n');
 
   const twitterIntentParams = new URLSearchParams({
-    text: shareText,
+    text: tweetText,
   });
   const twitterUrl = `https://twitter.com/intent/tweet?${twitterIntentParams.toString()}`;
 
@@ -56,16 +96,16 @@ export const ShareModal: React.FC<ShareModalProps> = ({ scores, onClose }) => {
 
         <div className="bg-gray-50 rounded-xl p-4 mb-6 space-y-1">
           {shareLines.map((line, index) => {
-            if (line === websiteUrl) {
+            if (line === trackingUrl) {
               return (
                 <a
                   key={index}
-                  href={websiteUrl}
+                  href={trackingUrl}
                   className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline break-all"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {websiteUrl.replace(/^https?:\/\//, '')}
+                  {trackingUrl.replace(/^https?:\/\//, '')}
                 </a>
               );
             }
