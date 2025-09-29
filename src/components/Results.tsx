@@ -233,9 +233,6 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
                   <p className="text-sm font-semibold text-emerald-700">明日の一手</p>
                   <p className="mt-1 text-slate-700">{nextAction}</p>
                 </div>
-                <div className="text-xs text-slate-400">
-                  共有テンプレ：<em>{shareSummary} 明日の一手は{nextActionShare}。 #RestMeter</em>
-                </div>
               </div>
             </div>
           </div>
