@@ -140,7 +140,7 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
               </h1>
             </div>
             <p className="text-white/80 leading-relaxed">
-              {scores.summary} 明日の一手として<strong className="text-white"> {nextAction}</strong> を提案します。
+              {scores.summary} 明日の一手として<strong className="text-white"> {nextAction}</strong>。
             </p>
 
             <div className="space-y-3 text-sm text-white/80">

@@ -169,7 +169,7 @@ const buildAiInsights = async (scoreSummary) => {
       input: [
         {
           role: 'system',
-          content: `あなたは、休養学とトータルコンディショニングに精通した専門家AIです。日本リカバリー協会の休養タイプやトータルコンディショニング理論を踏まえ、提供されたスコアから診断結果の「要約」と「明日の一手」を生成してください。専門用語を避け、科学的根拠に基づいた親しみやすい表現を使います。`
+          content: `あなたは、休養学とトータルコンディショニングに精通した専門家AIです。日本リカバリー協会の休養タイプやトータルコンディショニング理論を踏まえ、提供されたスコアから短文の診断結果の「要約」と「明日の一手」を生成してください。専門用語を避け、一般ユーザーでもわかるような親しみやすい表現を使います。アウトプットは説明文章のみを出力してください。`
         },
         {
           role: 'user',
@@ -186,11 +186,11 @@ const buildAiInsights = async (scoreSummary) => {
             properties: {
               summary: {
                 type: 'string',
-                description: '休養テストの総評を30文字程度。'
+                description: '休養テストの総評をplaintextで30文字程度。'
               },
               tomorrow_plan: {
                 type: 'string',
-                description: '疲労改善のための提案を30文字程度。'
+                description: '疲労改善のための提案をplaintextで30文字程度。'
               }
             },
             required: ['summary', 'tomorrow_plan'],
@@ -200,11 +200,11 @@ const buildAiInsights = async (scoreSummary) => {
         verbosity: 'low'
       },
       reasoning: {
-        effort: 'low',
+        effort: 'minimal',
         summary: 'auto'
       },
       tools: [],
-      store: false
+      store: true
     });
 
     const outputText = response.output?.[0]?.content?.[0]?.text || response.output_text;
