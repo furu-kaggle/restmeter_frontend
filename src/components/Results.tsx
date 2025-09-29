@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { RotateCcw, Share2, Home, Heart, Brain, Users } from 'lucide-react';
+import { RotateCcw, Share2, Home, Heart, Brain, Users, Loader2 } from 'lucide-react';
 import { SurveyData } from '../types';
-import { calculateScores } from '../utils/scoring';
 import { ShareModal } from './ShareModal';
 import { ImprovementHints } from './ImprovementHints';
 
@@ -11,9 +10,72 @@ interface ResultsProps {
   onBackHome: () => void;
 }
 
+const calculateScores = async (payload: SurveyData) => {
+  const response = await fetch('/.netlify/functions/calculate-scores', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to calculate scores');
+  }
+
+  return response.json();
+};
+
 export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome }) => {
   const [showShareModal, setShowShareModal] = useState(false);
-  const scores = calculateScores(data);
+  const [scores, setScores] = useState<any | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    let isMounted = true;
+
+    const fetchScores = async () => {
+      try {
+        const calculated = await calculateScores(data);
+        if (isMounted) {
+          setScores(calculated);
+        }
+      } catch (err) {
+        console.error(err);
+        if (isMounted) {
+          setError('結果の計算に失敗しました。しばらくしてから再度お試しください。');
+        }
+      }
+    };
+
+    fetchScores();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [data]);
+
+  if (error) {
+    return (
+      <div className="max-w-3xl mx-auto bg-red-50 border border-red-200 text-red-700 rounded-3xl p-8 text-center">
+        <p className="font-semibold mb-4">{error}</p>
+        <p className="text-sm mb-6">大変お手数ですが、診断を最初からやり直してください。</p>
+        <button
+          onClick={onRestart}
+          className="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors"
+        >
+          もう一度診断する
+        </button>
+      </div>
+    );
+  }
+
+  if (!scores) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 text-slate-500 gap-4">
+        <Loader2 className="w-8 h-8 animate-spin" />
+        <p className="text-sm">診断結果を計算中です…</p>
+      </div>
+    );
+  }
 
   const kpiDetails = [
     {
