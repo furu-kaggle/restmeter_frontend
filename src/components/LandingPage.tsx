@@ -85,75 +85,106 @@ const ResultPreviewCard: React.FC = () => {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
   const heroHighlights = [
-    '7つの質問で休養スコアと疲労タイプを言語化',
-    '匿名・1分・端末内完結のセルフチェック',
-    '3資本の偏りと明日の一手を1カードで提示'
+    '「生きづらさスコア」を7つの質問で可視化',
+    '休養学メソッドで偏りとケアの優先順位を整理',
+    '結果カードで明日の一手と言葉の引き出しを提案'
   ];
 
   const signals = [
-    '週末に寝ても、月曜の朝は体が重い',
-    '休みでも頭が仕事モードのまま落ち着かない',
-    '疲れを言葉にできず、つい我慢してしまう',
-    '「休む＝寝るだけ」になりがちで回復感がない'
+    '「休む＝怠ける」と思い込んだまま、頑張り続けていませんか？',
+    '寝ても回復しない——日本人の約8割が同じ疲れを抱えています。',
+    'スマホやPCで境界が消え、脳が休む瞬間がなくなっている。',
+    '「寝ればいい」で済ませると、必要な休養タイプが欠けたままに。'
   ];
 
   const capabilities = [
     {
-      title: '言語化',
-      description: '疲れの中身と伝え方がハッキリする'
+      title: '共感と翻訳',
+      description: '漠然とした「生きづらさ」を言葉と数字で捉え直す'
     },
     {
-      title: '可視化',
-      description: '3資本の偏りを1枚のカードで把握'
+      title: '科学的可視化',
+      description: '3つの疲労資本×7つの休養タイプで偏りを分析'
     },
     {
-      title: '次の一手',
-      description: '明日から試せるアクションを1つだけ提案'
+      title: '明日の一手',
+      description: 'あなたに合った小さな休み方を、すぐ試せる粒度で提案'
     }
   ];
 
   const usageSteps = [
     {
       title: '7問に回答',
-      description: '感覚的な疲れを 5 段階評価で答えるだけ'
+      description: '直感で選ぶだけ。生きづらさの感覚を5段階でチェック'
     },
     {
-      title: '結果が 1 枚で届く',
-      description: '総合スコア／3資本ミニバー／2行要約／明日の一手'
+      title: 'スコアを受け取る',
+      description: '総合スコア／3資本ミニバー／足りない休養タイプをカード表示'
     },
     {
-      title: '一手を試す＆シェア',
-      description: '改善アクションを試し、必要に応じて周囲へ共有'
+      title: '一手を試す＆共有',
+      description: 'おすすめの休み方を実践し、必要に応じて周囲と共有'
+    }
+  ];
+
+  const restTypes = [
+    {
+      title: '休息タイプ',
+      description: '寝る前の儀式づくりやマイクロレストで脳と身体を小刻みに休ませる'
+    },
+    {
+      title: '運動タイプ',
+      description: '心拍と呼吸を整える軽い運動が、疲れにくい身体づくりにつながる'
+    },
+    {
+      title: '栄養タイプ',
+      description: '胃腸を休ませる食事術やリカバリードリンクで代謝をサポート'
+    },
+    {
+      title: '親交タイプ',
+      description: '人・自然・動物との触れ合いで情緒を安定させる'
+    },
+    {
+      title: '娯楽タイプ',
+      description: '「好き」に没頭する時間がストレスを分散し気分を整える'
+    },
+    {
+      title: '造形・想像タイプ',
+      description: '手を動かす創作や空想が脳の別回路を刺激しリセットを促す'
+    },
+    {
+      title: '転換タイプ',
+      description: '旅・模様替え・ワーケーションなど環境転換で視点をリセット'
     }
   ];
 
   const pillars = [
     {
       title: '生理的資本',
-      description: '睡眠の質／体内リズム／身体回復の状態を把握'
+      description: '睡眠・体内リズム・身体回復力といったベースパワーの状態を把握'
     },
     {
       title: '心理的資本',
-      description: '仕事からの切り替えや感情の安定をチェック'
+      description: '感情の波やメンタルの切り替え力をチェックし、心を軽くする'
     },
     {
       title: '社会・能動的資本',
-      description: '人とのつながり・アクティブレストの実践度を計測'
+      description: '人とのつながりやアクティブレストの実践度を可視化し、孤立を防ぐ'
     }
   ];
 
   const faq = [
     {
       question: 'どのくらい時間がかかる？',
-      answer: '約1分、7問に答えるだけです。'
+      answer: '約1分。7問に答えるだけで「生きづらさスコア」が算出されます。'
     },
     {
       question: '回答は保存される？',
-      answer: '保存しません。端末内で処理し、ページを閉じれば消えます。'
+      answer: '保存しません。端末内で処理し、ページを閉じると情報は消去されます。'
     },
     {
       question: '医療用の診断ですか？',
-      answer: 'いいえ。自己管理の参考情報です。体調不良時は医療機関へご相談ください。'
+      answer: '医療行為ではありません。疲れや生きづらさを整えるセルフケアのヒントです。体調不良時は医療機関へご相談ください。'
     }
   ];
 
@@ -176,15 +207,26 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
             <img src={wordmarkImage} alt="RestMeter ワードマーク" className="h-12 w-auto" />
             <div>
               <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-                あなたのその疲れ、
+                今日も、なんだか
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-sky-300">
-                  言葉にできますか？
+                  生きづらい…
                 </span>
               </h1>
               <p className="mt-6 text-lg text-white/80 leading-relaxed">
-                7つの質問で疲れの現在地をスコア化し、伝えやすい言葉に翻訳。コンディションの偏りと明日の一手が、1枚のカードで手元に届きます。
+                その正体不明の“疲れ”を、7つの質問で見える化。生きづらさの原因を休養学の視点で言語化し、次にとるべき一歩をカードで受け取れます。
               </p>
+              <div className="mt-6 bg-white/10 border border-white/20 rounded-3xl p-5 space-y-2 backdrop-blur">
+                <p className="text-sm md:text-base font-semibold text-white tracking-wide">
+                  ”がんばってる”のに、なぜか空回り？
+                </p>
+                <p className="text-sm text-white/90">
+                  あなたの「生きづらさスコア」を測定。
+                </p>
+                <p className="text-xs md:text-sm text-white/70 leading-relaxed">
+                  科学が教える、パフォーマンスを取り戻す7つの休養タイプとは？
+                </p>
+              </div>
             </div>
 
             <ul className="space-y-3">
@@ -202,12 +244,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
                 className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-slate-900 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-200 hover:scale-105"
               >
                 <ArrowRight className="w-5 h-5 mr-2" />
-                1分で診断を始める
+                無料で”生きづらさ”診断を始める
               </button>
               <div className="text-xs text-white/60 flex flex-col sm:flex-row sm:items-center sm:gap-4">
                 <span>医療行為ではありません</span>
-                <span>回答は端末内処理</span>
-                <span>個人情報の保存なし</span>
+                <span>匿名・保存なし</span>
+                <span>回答は端末内で完結</span>
               </div>
             </div>
           </div>
@@ -233,12 +275,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
         </div>
       </section>
 
-      {/* Signals */}
+      {/* Empathy */}
       <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
         <div className="space-y-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">こんなサイン、ありませんか？</h2>
-          <p className="text-lg text-gray-600">
-            当てはまるほど、疲れの言語化と優先順位づけが必要なサイン。モヤモヤした違和感を言葉と数字に変えると、次の一手が見えてきます。
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+            それ、あなたのせいじゃない。現代人は「休むのが下手」なだけ。
+          </h2>
+          <p className="text-lg text-gray-600 leading-relaxed">
+            「休む＝怠ける」という思い込み、境界のない働き方、常時オンのデジタル環境――。積み重なった社会背景が「生きづらさ」という形で表面化しています。
           </p>
 
           <div className="space-y-4">
@@ -256,7 +300,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
           <div className="flex items-center gap-3 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-2xl px-4 py-3">
             <img src={leafAccent} alt="葉のアイコン" className="w-6 h-6" />
             <span>
-              疲れは“気分”ではなく、<strong>生理・心理・社会/能動の3つの資本</strong>が絡む複合課題です。
+              疲れは“気分”ではなく、<strong>生理・心理・社会/能動の3資本と7つの休養タイプ</strong>が絡み合う複合課題です。
             </span>
           </div>
         </div>
@@ -279,8 +323,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
           className="absolute -top-16 -right-16 w-40 opacity-10"
         />
         <div className="relative text-center max-w-2xl mx-auto mb-12 space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">この診断でできること</h2>
-          <p className="text-lg text-gray-600">3つのアプローチで「疲れの現在地」を翻訳します。</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">生きづらさを科学する3つのサポート</h2>
+          <p className="text-lg text-gray-600">感覚のもやもやを、共感・分析・アクションへとつなげます。</p>
         </div>
 
         <div className="relative grid gap-6 md:grid-cols-3">
@@ -299,8 +343,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
       {/* Usage steps */}
       <section className="space-y-12">
         <div className="text-center max-w-2xl mx-auto space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">使い方（3ステップ）</h2>
-          <p className="text-lg text-gray-600">診断から実践、共有まで最短ルートで支援します。</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">診断の流れ（たった3ステップ）</h2>
+          <p className="text-lg text-gray-600">答える→気づく→試す。生きづらさを整えるサイクルを素早く回せます。</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
@@ -322,7 +366,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
             className="inline-flex items-center justify-center px-8 py-3 text-sm font-semibold text-emerald-700 bg-emerald-50 rounded-2xl hover:bg-emerald-100 transition-colors duration-200"
           >
             <Target className="w-4 h-4 mr-2" />
-            今すぐ1分で診断
+            無料で”生きづらさ”診断を体験
           </button>
         </div>
       </section>
@@ -330,28 +374,47 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
       {/* Result sample */}
       <section className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
         <div className="space-y-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">結果サンプル（イメージ）</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">「生きづらさスコア」の結果サンプル</h2>
           <p className="text-lg text-gray-600">
-            総合スコアと3資本のバランス、明日の一手を1枚のカードで確認できます。
+            数字と言葉で偏りを把握し、どの休養タイプを補えばいいかがひと目でわかります。
           </p>
           <ul className="space-y-4 text-gray-700">
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-emerald-500 mt-1" />
-              <span>休養スコア：78 / 100 ｜ 評価：やや良好</span>
+              <span>総合スコア＆評価：いまの生きづらさレベルを客観視</span>
             </li>
             <li className="flex items-start gap-3">
               <Sparkles className="w-5 h-5 text-sky-500 mt-1" />
-              <span>弱みがひと目でわかる 3 資本ミニバーと 2 行の要約</span>
+              <span>3資本ミニバーと要約で、言語化のヒントを獲得</span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-amber-500 mt-1" />
-              <span>明日の一手の提案が自動生成される</span>
+              <span>不足している休養タイプと「明日の一手」が自動で届く</span>
             </li>
           </ul>
         </div>
 
         <div className="flex justify-center">
           <ResultPreviewCard />
+        </div>
+      </section>
+
+      {/* Rest Types */}
+      <section className="bg-emerald-50/60 border border-emerald-100 rounded-3xl p-8 md:p-12 space-y-10">
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">7つの休養タイプで原因を特定</h2>
+          <p className="text-lg text-gray-600">
+            「寝れば治る」では届かない領域までカバー。あなたの生きづらさに足りない休み方をピンポイントで導きます。
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {restTypes.map((type) => (
+            <div key={type.title} className="rounded-3xl bg-white border border-emerald-100 shadow-sm p-6 space-y-3">
+              <h3 className="text-xl font-bold text-gray-900">{type.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{type.description}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -363,9 +426,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
           className="absolute bottom-[-40px] left-[-40px] w-48 opacity-10"
         />
         <div className="relative text-center max-w-3xl mx-auto mb-10 space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">なぜ当たる？（3資本の考え方）</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">3つの疲労資本で全体像を立体把握</h2>
           <p className="text-lg text-gray-600">
-            寝るだけじゃ足りない。切り替えとつながりも“休む力”。3つの資本で偏りを立体的に分析します。
+            体・心・社会性のどこがダメージを受けているかを俯瞰し、優先順位を定める。休養学の核となるフレームです。
           </p>
         </div>
 
@@ -407,16 +470,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
           className="absolute inset-0 m-auto opacity-10 w-64 h-64 pointer-events-none"
         />
         <div className="relative space-y-6">
-          <h2 className="text-3xl md:text-4xl font-bold">最高のパフォーマンスは、最高の休養から。</h2>
+          <h2 className="text-3xl md:text-4xl font-bold">もう「なんとなく不調」で悩まない。</h2>
           <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-            「疲れの現在地」を言葉にするところから、整えるチャンスが始まります。
+            今日から始める「攻めの休養」で、最高のパフォーマンスと自分らしさを取り戻そう。
+          </p>
+          <p className="text-sm md:text-base text-white/80 leading-relaxed">
+            休むことは怠けではなく投資。これまでの気晴らしや習慣も、科学的な休養のひとつかもしれません。自分の状態を知り、主体的に整える一歩を踏み出しましょう。
           </p>
           <button
             onClick={onStartSurvey}
             className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-emerald-700 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-transform duration-200 hover:scale-105"
           >
             <ArrowRight className="w-5 h-5 mr-2" />
-            今すぐ1分診断を始める
+            無料で”生きづらさ”診断を始める
           </button>
           <div className="text-xs text-white/80 flex flex-wrap justify-center gap-4">
             <span>— 免責／プライバシー</span>
@@ -429,10 +495,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
       <button
         onClick={onStartSurvey}
         className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-500 text-white text-sm font-semibold shadow-xl hover:bg-emerald-600 transition-transform duration-200 hover:scale-105"
-        aria-label="1分で診断を開始する"
+        aria-label="無料で生きづらさ診断を開始する"
       >
         <MessageCircle className="w-4 h-4" />
-        1分で診断
+        無料で”生きづらさ”診断
       </button>
 
       {/* References */}
