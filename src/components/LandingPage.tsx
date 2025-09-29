@@ -78,9 +78,6 @@ const ResultPreviewCard: React.FC = () => {
           <p className="mt-1 text-sm text-gray-700">寝る90分前は画面オフ + 5分雑談。</p>
         </div>
 
-        <div className="text-xs text-gray-500 leading-relaxed">
-          共有テンプレ：<em>休養スコア 78/100（やや良好）。弱いのは心理・社会。明日の一手は画面オフ＆雑談。 #RestMeter</em>
-        </div>
       </div>
     </div>
   );
@@ -348,7 +345,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-amber-500 mt-1" />
-              <span>明日の一手と共有テンプレートを同時に表示</span>
+              <span>明日の一手の提案が自動生成される</span>
             </li>
           </ul>
         </div>
