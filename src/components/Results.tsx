@@ -4,6 +4,12 @@ import { SurveyData, ScoreData } from '../types';
 import { ShareModal } from './ShareModal';
 import { ImprovementHints } from './ImprovementHints';
 import { captureResultImage } from '../hooks/useResultImage';
+import meter0Image from '../assets/images/image1.webp';
+import meter20Image from '../assets/images/image2.webp';
+import meter40Image from '../assets/images/image3.webp';
+import meter60Image from '../assets/images/image4.webp';
+import meter80Image from '../assets/images/image5.webp';
+import meter100Image from '../assets/images/image6.webp';
 
 interface ResultsProps {
   data: SurveyData;
@@ -32,6 +38,26 @@ const calculateScores = async (payload: SurveyData): Promise<ScoreData> => {
   }
 
   return response.json();
+};
+
+// Meter image variations correspond to 0/20/40/60/80/100 score brackets.
+const restMeterImages = [
+  { min: 0, src: meter0Image, label: 'スコア0〜19' },
+  { min: 20, src: meter20Image, label: 'スコア20〜39' },
+  { min: 40, src: meter40Image, label: 'スコア40〜59' },
+  { min: 60, src: meter60Image, label: 'スコア60〜79' },
+  { min: 80, src: meter80Image, label: 'スコア80〜99' },
+  { min: 100, src: meter100Image, label: 'スコア100' }
+] as const;
+
+const getRestMeterImage = (score: number) => {
+  let selected = restMeterImages[0];
+  for (const option of restMeterImages) {
+    if (score >= option.min) {
+      selected = option;
+    }
+  }
+  return selected;
 };
 
 export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome }) => {
@@ -88,6 +114,7 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
     );
   }
 
+  const restMeter = getRestMeterImage(scores.restScore);
   const kpiDetails = [
     {
       name: '生理的資本',
@@ -212,6 +239,15 @@ export const Results: React.FC<ResultsProps> = ({ data, onRestart, onBackHome })
               ref={cardRef}
               className="bg-white text-slate-900 rounded-[32px] shadow-2xl border border-white/60 p-6 space-y-6"
             >
+              <div className="space-y-2">
+                <img
+                  src={restMeter.src}
+                  alt={`調子メーター（${restMeter.label}）`}
+                  className="w-full h-36 rounded-2xl object-cover"
+                />
+                <p className="text-xs font-semibold text-emerald-600 text-right">調子メーター: {restMeter.label}</p>
+              </div>
+
               <div className="flex items-end justify-between">
                 <div>
                   <p className="text-xs font-semibold text-emerald-500 uppercase tracking-[0.3em]">総合休養スコア</p>
