@@ -15,16 +15,19 @@ import heroPhoto from '../assets/images/2.webp';
 import wordmarkImage from '../assets/images/3.webp';
 import emblemImage from '../assets/images/1.webp';
 import leafAccent from '../assets/images/6.webp';
+import restMeterSampleImage from '../assets/images/image4.webp';
 
 interface LandingPageProps {
   onStartSurvey: () => void;
 }
 
 const ResultPreviewCard: React.FC = () => {
+  const restScore = 78;
+  const restMeterLabel = 'スコア60〜79';
   const barData = [
-    { label: '生理的資本', value: '80/100', width: '80%', color: 'bg-red-400' },
-    { label: '心理的資本', value: '60/100', width: '60%', color: 'bg-blue-400' },
-    { label: '社会・能動的資本', value: '60/100', width: '60%', color: 'bg-green-400' }
+    { label: '生理的資本', value: 80, color: 'bg-red-400' },
+    { label: '心理的資本', value: 60, color: 'bg-blue-400' },
+    { label: '社会・能動的資本', value: 60, color: 'bg-green-400' }
   ];
 
   return (
@@ -34,16 +37,27 @@ const ResultPreviewCard: React.FC = () => {
         aria-hidden="true"
       />
       <div className="relative bg-white rounded-[32px] shadow-2xl border border-white/60 p-6 space-y-6">
+        <div className="space-y-2">
+          <img
+            src={restMeterSampleImage}
+            alt="調子メーターのイメージ"
+            className="w-full h-32 rounded-2xl object-cover"
+          />
+          <p className="text-xs font-semibold text-emerald-600 text-right">調子メーター: {restMeterLabel}</p>
+        </div>
+
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs font-semibold text-emerald-600 uppercase tracking-[0.2em]">総合休養スコア</p>
             <p className="mt-2 text-4xl font-bold text-gray-900">
-              78<span className="text-base font-semibold text-gray-500"> / 100</span>
+              {restScore}
+              <span className="text-base font-semibold text-gray-500"> / 100</span>
             </p>
           </div>
           <div className="text-right">
             <p className="text-[11px] text-gray-500 uppercase tracking-[0.3em]">評価</p>
             <p className="text-lg font-semibold text-emerald-600">やや良好</p>
+            <p className="text-xs text-gray-400">★★★★☆</p>
           </div>
         </div>
 
@@ -52,12 +66,12 @@ const ResultPreviewCard: React.FC = () => {
             <div key={bar.label} className="space-y-1">
               <div className="flex items-center justify-between text-sm text-gray-600">
                 <span>{bar.label}</span>
-                <span className="text-gray-500">{bar.value}</span>
+                <span className="text-gray-500">{bar.value}/100</span>
               </div>
               <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
                 <div
                   className={`${bar.color} h-full rounded-full transition-all duration-700`}
-                  style={{ width: bar.width }}
+                  style={{ width: `${bar.value}%` }}
                 />
               </div>
             </div>
@@ -67,7 +81,7 @@ const ResultPreviewCard: React.FC = () => {
         <div>
           <p className="text-xs font-semibold text-emerald-600 uppercase tracking-[0.3em]">要約（2行）</p>
           <p className="mt-2 text-sm text-gray-700 leading-relaxed">
-            直近の休養は「やや偏り」。生理は〇、
+            直近の休養は「やや偏り」。生理は◎、
             <span className="font-semibold text-sky-600">心理</span>と
             <span className="font-semibold text-emerald-600">社会</span>が弱め。
           </p>
@@ -75,7 +89,7 @@ const ResultPreviewCard: React.FC = () => {
 
         <div className="bg-emerald-50 rounded-2xl border border-emerald-200 p-4">
           <p className="text-sm font-semibold text-emerald-700">明日の一手</p>
-          <p className="mt-1 text-sm text-gray-700">寝る90分前は画面オフ + 5分雑談。</p>
+          <p className="mt-1 text-sm text-gray-700">寝る90分前は画面オフ + 5分の雑談タイムで心をゆるめる。</p>
         </div>
 
       </div>
@@ -375,17 +389,17 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartSurvey }) => {
       <section className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
         <div className="space-y-6">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">「生きづらさスコア」の結果サンプル</h2>
-          <p className="text-lg text-gray-600">
-            数字と言葉で偏りを把握し、どの休養タイプを補えばいいかがひと目でわかります。
+          <p className="text-lg text-gray-600 leading-relaxed">
+            調子メーターと3資本の偏りがカードに集約。弱っている休養タイプと言葉のヒントが一目で整理されます。
           </p>
           <ul className="space-y-4 text-gray-700">
             <li className="flex items-start gap-3">
               <BarChart3 className="w-5 h-5 text-emerald-500 mt-1" />
-              <span>総合スコア＆評価：いまの生きづらさレベルを客観視</span>
+              <span>調子メーターと総合スコアで、いまの生きづらさレベルを直感把握</span>
             </li>
             <li className="flex items-start gap-3">
               <Sparkles className="w-5 h-5 text-sky-500 mt-1" />
-              <span>3資本ミニバーと要約で、言語化のヒントを獲得</span>
+              <span>3資本ミニバーと要約コメントで、偏りの理由を言語化</span>
             </li>
             <li className="flex items-start gap-3">
               <Lightbulb className="w-5 h-5 text-amber-500 mt-1" />
